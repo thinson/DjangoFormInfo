@@ -97,8 +97,11 @@ def statistics_detail(request, static_pk):
         answers_to = answers.filter(question=question)
         for author in authors:
             row_index = row_index + 1
-            answer = answers_to.filter(author=author)[0]
-            sheet1.cell(row=row_index, column=col_index).value = answer.answer_name
+            answer = answers_to.filter(author=author).first()
+            if answer:
+                sheet1.cell(row=row_index, column=col_index).value = answer.answer_name
+            else:
+                sheet1.cell(row=row_index, column=col_index).value = ''
         col_index = col_index + 1
         row_index = 1
         # 写入IO

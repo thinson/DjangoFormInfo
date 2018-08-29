@@ -9,3 +9,6 @@ body {
 li {
     list-style: none!important;
 }
+.bottom-text{
+    font-size: 0.5em!important;
+}
