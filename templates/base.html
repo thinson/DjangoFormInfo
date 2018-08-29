@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="/static/base.css">
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+    {% block css_header %}{% endblock %}
+</head>
+<body>
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+    <div class="navbar-header">
+        <a href="{% url 'home' %}" class="navbar-brand">在线填表系统</a>
+        <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+            <li><a href="{% url 'home' %}">首页</a></li>
+            <li><a href="{% url 'list' %}">待填表格</a></li>
+            <li><a href="{% url 'list' %}">已完成表格(待开发)</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            {% if not user.is_authenticated %}
+                <li><a href="{% url 'login' %}">登录</a></li>
+                <li><a href="{% url 'register' %}">注册</a></li>
+            {% else %}
+                <li><a href="{% url 'list' %}">欢迎你,<b>{{ user.username }}</b>   ヾ(=･ω･=)o</a></li>
+                {% if user.username == 'yb' %}
+                    <li><a href="{% url 'statistics' %}">数据中心</a></li>
+                    <li><a href="{% url 'upload' %}">上传新表格</a></li>
+                {% endif %}
+                <li><a href="{% url 'logout' %}">注销</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    </div>
+</div>
+    {% block content %}{% endblock %}
+<script src="/static/bootstrap-3.3.7/js/jquery-1.12.4.min.js"></script>
+<script src="/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+{% block script_extends %}{% endblock %}
+<div class="col-xs-4 col-xs-offset-4 navbar-fixed-bottom">
+    <p class="text-center text-capitalize">Powered by thinson</p>
+</div>
+</body>
+</html>

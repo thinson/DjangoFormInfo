@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title%}
+    在线填表系统|登录
+{% endblock %}
+{% block css_header %}
+    <link rel="stylesheet" href="/static/home.css">
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-4 col-xs-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                <h3 class="panel-title">登录</h3>
+            </div>
+            <div class="panel-body">
+            {% if not user.is_authenticated %}
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {% for field in login_form %}
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        <p class="text-danger">{{ field.errors.as_text }}</p>
+                    {% endfor %}
+                    <span class="pull-left text-danger">{{ login_form.non_field_errors }}</span>
+                    <span class="pull-left"><a class="text-primary" href="{% url 'yb_login' %}">使用易班登录</a></a></span>
+                    <input type="submit" value="登录" class="btn btn-default pull-right">
+                </form>
+            {% else %}
+                <div><span>用户  <strong>{{ user.username }}</strong>  已登录，请勿重复登录</span></div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

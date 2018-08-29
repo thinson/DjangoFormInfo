@@ -1,0 +1,20 @@
+.post-detail, .title{
+    text-align: center;
+    line-height: 20px
+}
+
+/*.content {*/
+    /*padding:20px 50px;*/
+/*}*/
+.post-detail li{
+    display: inline-block;
+    margin-right: 15px;
+}
+
+/*.pre-next {*/
+    /*margin:20px 50px;*/
+/*}*/
+
+.django-ckeditor-widget {
+    width: 100%;
+}

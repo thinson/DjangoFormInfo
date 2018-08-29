@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title%}
+    在线填表系统|登录
+{% endblock %}
+{% block css_header %}
+    <link rel="stylesheet" href="/static/home.css">
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-4 col-xs-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                <h3 class="panel-title">上传表格</h3>
+            </div>
+            <div class="panel-body">
+            {% if  user.is_authenticated %}
+                <form enctype="multipart/form-data" action="" method="POST">
+                    {% csrf_token %}
+{#                    <div class="form-group">#}
+{#                        <label>问卷名称</label>#}
+{#                        <input class="form-control" type="text" name="title" placeholder="输入问卷名称">#}
+{#                        <label>上传文件继续</label>#}
+{#                        <input id="exampleInputFile" type="file" name="form" placeholder="请上传">#}
+{#                        <input type="submit" class="btn btn-primary pull-right">#}
+{#                    </div>#}
+{#                    {{ upload_form }}#}
+                    {% for field in upload_form %}
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+{#                        <p class="text-danger">{{ field.errors.as_text }}</p>#}
+                    {% endfor %}
+                    <span class="pull-left text-danger">{{ upload_form.non_field_errors }}</span>
+                    <input type="submit" class="btn btn-primary pull-right">
+                </form>
+            {% else %}
+                <div><span>请先登录</span></div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

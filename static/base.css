@@ -1,0 +1,11 @@
+* {
+    margin:0;
+    padding:0
+}
+body {
+    margin-top: 80px!important;
+}
+
+li {
+    list-style: none!important;
+}

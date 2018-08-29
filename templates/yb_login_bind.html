@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title%}
+    在线填表系统|登录
+{% endblock %}
+{% block css_header %}
+    <link rel="stylesheet" href="/static/home.css">
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-xs-4 col-xs-offset-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                <h3 class="panel-title">登录</h3>
+            </div>
+            <div class="panel-body">
+            <h4> 欢迎你，易班用户<b class="text-primary">{{ user_name }}</b><br>请绑定后继续</h4>
+            {% if not user.is_authenticated %}
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {% for field in login_form %}
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        <p class="text-danger">{{ field.errors.as_text }}</p>
+                    {% endfor %}
+                    <span class="pull-left text-danger">{{ login_form.non_field_errors }}</span>
+                    <input type="submit" value="登录" class="btn btn-default pull-right">
+                </form>
+            {% else %}
+                <div><span>用户  <strong>{{ user.username }}</strong>  已登录，请勿重复登录</span></div>
+            {% endif %}
+            </div>
+        </div>
+        </div>
+    </div>
+    <script src="/static/bootstrap-3.3.7/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#user_id').val({{ user_id }})
+        });
+    </script>
+{% endblock %}
