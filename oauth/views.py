@@ -5,7 +5,8 @@ from django.shortcuts import HttpResponseRedirect
 from .models import OAuthyb
 from django.contrib import auth
 from django.urls import reverse
-from .forms import YBLoginForm
+from .forms import YBLoginForm, YBRegForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -47,10 +48,21 @@ def yb_check(request):
 
 def yb_bind(request):
     if request.method == 'POST':
-        login_form = YBLoginForm(request.POST)
-        if login_form.is_valid():
-            user_id = login_form.cleaned_data['user_id']
-            user = login_form.cleaned_data['user']
+        reg_form = YBRegForm(request.POST)
+        if reg_form.is_valid():
+
+            username = reg_form.cleaned_data['username']
+            email = reg_form.cleaned_data['email']
+            password = reg_form.cleaned_data['password']
+
+            user = User()
+            user.username = username
+            user.email = email
+            user.set_password(password)
+            user.save()
+
+            user_id = reg_form.cleaned_data['user_id']
+
             oauth_obj = OAuthyb()
             oauth_obj.yb_id = user_id
             oauth_obj.user = user
@@ -58,9 +70,9 @@ def yb_bind(request):
             auth.login(request, user)
             return HttpResponseRedirect(reverse('home'))
     else:
-        login_form = YBLoginForm()
+        login_form = YBRegForm()
     context = {}
-    context['login_form'] = login_form
+    context['login_form'] = YBRegForm
     context['user_id'] = request.GET.get('user_id')
     context['user_name'] = request.GET.get('user_name')
     return render(request, 'yb_login_bind.html', context)

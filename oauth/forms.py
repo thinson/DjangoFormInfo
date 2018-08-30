@@ -7,7 +7,7 @@ class YBRegForm(forms.Form):
     username = forms.CharField(label='用户名',
                                max_length=30,
                                min_length=3,
-                               widget=forms.TextInput(attrs={'class':'form-control','disabled':'True'}))
+                               widget=forms.TextInput(attrs={'class':'form-control','id':'nickname','placeholder':'请输入用户名'}))
 
     email = forms.EmailField(label='邮箱',
                              widget=forms.EmailInput(attrs={'class':'form-control', 'placeholder':'请输入邮箱'}))
@@ -18,11 +18,12 @@ class YBRegForm(forms.Form):
     password_again = forms.CharField(label='再输入一次密码',
                                      min_length=6,
                                      widget=forms.PasswordInput(attrs={'class':'form-control', 'placeholder':'再输入一次密码'}))
+    user_id = forms.CharField(label='', widget=forms.HiddenInput(attrs={'id': 'user_id'}))
 
     def clean_username(self):
         username = self.cleaned_data['username']
         if User.objects.filter(username=username).exists():
-            raise forms.ValidationError('用户名已存在')
+            raise forms.ValidationError('用户名已存在，请修改')
         return username
 
     def clean_email(self):
@@ -37,6 +38,12 @@ class YBRegForm(forms.Form):
         if password != password_again:
             raise forms.ValidationError('两次输入的密码不一致')
         return password_again
+
+    def clean_user_id(self):
+        user_id = self.cleaned_data['user_id']
+        if OAuthyb.objects.filter(user_id=user_id).exists():
+            raise forms.ValidationError('该ID已绑定其他账号已存在')
+        return user_id
 
 
 class YBLoginForm(forms.Form):

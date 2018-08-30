@@ -13,7 +13,7 @@
                 <h3 class="panel-title">登录</h3>
             </div>
             <div class="panel-body">
-            <h4> 欢迎你，易班用户<b class="text-primary">{{ user_name }}</b><br>请绑定后继续</h4>
+            <h4> 欢迎你，易班用户<b class="text-primary">{{ user_name }}</b><br>请注册绑定后继续</h4>
             {% if not user.is_authenticated %}
                 <form action="" method="POST">
                     {% csrf_token %}
@@ -23,7 +23,7 @@
                         <p class="text-danger">{{ field.errors.as_text }}</p>
                     {% endfor %}
                     <span class="pull-left text-danger">{{ login_form.non_field_errors }}</span>
-                    <input type="submit" value="登录" class="btn btn-default pull-right">
+                    <input type="submit" value="注册" class="btn btn-default pull-right">
                 </form>
             {% else %}
                 <div><span>用户  <strong>{{ user.username }}</strong>  已登录，请勿重复登录</span></div>
@@ -35,7 +35,10 @@
     <script src="/static/bootstrap-3.3.7/js/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#user_id').val({{ user_id }})
+            {#console.log({{ user_name }});#}
+            $('#user_id').val({{ user_id }});
+            //$('#nickname').placeholder({{ user_name }});
+            $('#nickname').val("{{ user_name }}");
         });
     </script>
 {% endblock %}

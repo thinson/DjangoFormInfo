@@ -68,7 +68,7 @@ def register(request):
 
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect("/login/")
+    return HttpResponseRedirect("/")
 
 def statistics(request):
     if request.user.is_authenticated:

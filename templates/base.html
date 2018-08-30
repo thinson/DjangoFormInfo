@@ -29,8 +29,7 @@
         </ul>
         <ul class="nav navbar-nav navbar-right">
             {% if not user.is_authenticated %}
-                <li><a href="{% url 'login' %}">登录</a></li>
-                <li><a href="{% url 'register' %}">注册</a></li>
+                <li><a href="{% url 'yb_login' %}">登录</a></li>
             {% else %}
                 <li><a href="{% url 'list' %}">欢迎你,<b>{{ user.username }}</b>   ヾ(=･ω･=)o</a></li>
                 {% if user.username == 'yb' %}
